@@ -8,8 +8,15 @@ class PageController extends Controller
 {
     public function home()
     {
-        return view("welcome", [
+        return view("frontend.welcome", [
             "title" => "Beranda",
+        ]);
+    }
+
+    public function event($id)
+    {
+        return view("frontend.event", [
+            "title" => "Event",
         ]);
     }
 }
