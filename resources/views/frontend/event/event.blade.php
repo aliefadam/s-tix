@@ -87,13 +87,12 @@
                     <span class="uppercase poppins-medium">Rp. 75.000</span>
                 </div>
                 <div class="mt-1 flex justify-center">
-                    <button type="button"
-                        class="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">Beli
-                        Sekarang
-                    </button>
+                    <a href="{{ route('event.tickets', 1) }}" type="button"
+                        class="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-teal-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">
+                        Beli Sekarang
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

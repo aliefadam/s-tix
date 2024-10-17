@@ -15,8 +15,42 @@ class PageController extends Controller
 
     public function event($id)
     {
-        return view("frontend.event", [
+        return view("frontend.event.event", [
             "title" => "Event",
+        ]);
+    }
+
+    public function eventTickets($id)
+    {
+        return view("frontend.event.event-tickets", [
+            "title" => "Pilih Tiket",
+        ]);
+    }
+
+    public function eventDataDiri($id)
+    {
+        return view("frontend.event.event-data-diri", [
+            "title" => "Data Diri",
+        ]);
+    }
+
+    public function eventPembayaran($id)
+    {
+        return view("frontend.event.event-pembayaran", [
+            "title" => "Data Diri",
+        ]);
+    }
+
+    public function eventPayment($id)
+    {
+        $invoice = "INV-TESTING";
+        return redirect()->route("event.payment-waiting", [$id, $invoice]);
+    }
+
+    public function eventPaymentWaiting($id, $invoice)
+    {
+        return view("frontend.event.event-payment-waiting", [
+            "title" => "Menunggu Pembayaran",
         ]);
     }
 }
