@@ -13,3 +13,13 @@
     background-color: rgb(15, 118, 110);
     outline: 1px solid #0f766e;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

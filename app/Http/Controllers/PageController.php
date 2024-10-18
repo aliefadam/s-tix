@@ -53,4 +53,18 @@ class PageController extends Controller
             "title" => "Menunggu Pembayaran",
         ]);
     }
+
+    public function profile()
+    {
+        return view("frontend.user.profile", [
+            "title" => "Profil"
+        ]);
+    }
+
+    public function transaction()
+    {
+        return view("frontend.transaction.transaction", [
+            "title" => "Transaksi",
+        ]);
+    }
 }
