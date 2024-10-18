@@ -31,8 +31,8 @@
                 <i class="fa-regular fa-money-from-bracket"></i>
                 Transaksi
             </a>
-            <a href=""
-                class="border {{ request()->is('ticket') ? 'bg-teal-700 text-white hover:bg-teal-800' : 'border-teal-700 text-teal-700 hover:bg-teal-700 hover:bg-opacity-10' }} duration-200 focus:ring-4 focus:ring-teal-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800 flex items-center gap-2">
+            <a href="{{ route('ticket') }}"
+                class="border {{ request()->is('ticket') || request()->is('ticket/*') ? 'bg-teal-700 text-white hover:bg-teal-800' : 'border-teal-700 text-teal-700 hover:bg-teal-700 hover:bg-opacity-10' }} duration-200 focus:ring-4 focus:ring-teal-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800 flex items-center gap-2">
                 <i class="fa-regular fa-ticket"></i>
                 Tiket
             </a>

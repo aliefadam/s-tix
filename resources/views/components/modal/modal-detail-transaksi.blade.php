@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="flex-[1] flex flex-col gap-1 items-end">
-                    <span class="lg:text-sm text-xs text-right">Total Harga Barang</span>
+                    <span class="lg:text-sm text-xs text-right">Total Harga</span>
                     <span class="poppins-semibold leading-none lg:text-base text-sm lg:inline block lg:mt-0 mt-1">
                         Rp. 100,000
                     </span>
@@ -60,7 +60,7 @@
         </div>
         <div class="flex justify-between">
             <span class="lg:text-sm text-xs flex-[3]">
-                Total Harga (1 Barang)
+                Total Harga (1 Tiket)
             </span>
             <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">
                 Rp. 100,000

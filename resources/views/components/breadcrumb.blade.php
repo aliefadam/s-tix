@@ -1,4 +1,4 @@
-<div class="flex items-center gap-2 text-sm">
+<div class="flex items-center gap-2 text-sm h-fit">
     @foreach ($before as $item)
         <a href="{{ $item['url'] }}" class="text-teal-700 hover:underline flex items-center gap-2">
             {{ $item['name'] }}

@@ -67,4 +67,18 @@ class PageController extends Controller
             "title" => "Transaksi",
         ]);
     }
+
+    public function ticket()
+    {
+        return view("frontend.ticket.ticket", [
+            "title" => "Tiket",
+        ]);
+    }
+
+    public function ticketDetail($id)
+    {
+        return view("frontend.ticket.ticket-detail", [
+            "title" => "Tiket Detail",
+        ]);
+    }
 }
