@@ -26,3 +26,5 @@ Route::prefix("/ticket")->group(function () {
     Route::get("/", [PageController::class, "ticket"])->name("ticket");
     Route::get("/{id}", [PageController::class, "ticketDetail"])->name("ticket.detail");
 });
+
+require __DIR__ . '/admin.php';

@@ -49,6 +49,102 @@
     </div>
     <hr>
     <div class="space-y-4">
+        <h1 class="poppins-semibold lg:text-base text-sm">Detail Pembeli</h1>
+        <div class="flex justify-between">
+            <span class="lg:text-sm text-xs flex-[3]">Email</span>
+            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">aliefadam6@gmail.com</span>
+        </div>
+        <div class="flex justify-between">
+            <span class="lg:text-sm text-xs flex-[3]">Nama</span>
+            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">Alief Adam</span>
+        </div>
+    </div>
+    <hr>
+    <div class="space-y-4">
+        <h1 class="poppins-semibold lg:text-base text-sm">Detail Pengunjung</h1>
+        <div id="accordion-collapse" data-accordion="collapse">
+            <div class="mb-3">
+                <h2 id="accordion-collapse-heading-2">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-4 rounded-md rtl:text-right text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                        data-accordion-target="#accordion-collapse-body-2" aria-expanded="false"
+                        aria-controls="accordion-collapse-body-2">
+                        <span class="">Data Pengunjung 1</span>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
+                    <div class="p-5 border border-b space-y-4 border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Email</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">aliefadam6@gmail.com</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Nama Lengkap</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">Alief Adam</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Jenis Kelamin</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">Laki-laki</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Tanggal Lahir</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">21 Juli 2003</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Nomor Identitas</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">909090909090</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h2 id="accordion-collapse-heading-3">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-4 rounded-md rtl:text-right text-gray-500 border border-b border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                        data-accordion-target="#accordion-collapse-body-3" aria-expanded="false"
+                        aria-controls="accordion-collapse-body-3">
+                        <span class="">Data Pengunjung 2</span>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
+                    <div class="p-5 border border-b space-y-4 border-gray-200 dark:border-gray-700">
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Email</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">fajaradam6@gmail.com</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Nama Lengkap</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">Fajar Adam</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Jenis Kelamin</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">Laki-laki</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Tanggal Lahir</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">21 Agustus 2003</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="lg:text-sm text-xs flex-[3]">Nomor Identitas</span>
+                            <span class="lg:text-sm text-xs flex-[2] text-gray-600 text-end">909090909090</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="space-y-4">
         <h1 class="poppins-semibold lg:text-base text-sm">Rincian Pembayaran</h1>
         <div class="flex justify-between">
             <span class="lg:text-sm text-xs flex-[3]">Metode Pembayaran</span>

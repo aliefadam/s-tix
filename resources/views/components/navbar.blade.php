@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-10 w-full bg-white h-[80px] px-10 flex justify-between items-center shadow-md">
+<nav class="fixed top-0 z-20 w-full bg-white h-[80px] px-10 flex justify-between items-center shadow-md">
     <div class="flex gap-5 items-center">
         <a href="/" class="text-2xl poppins-black text-teal-700">S-TIX</a>
         <div class="flex w-[500px]">

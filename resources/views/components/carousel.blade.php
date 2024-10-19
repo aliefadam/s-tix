@@ -1,4 +1,4 @@
-<div id="default-carousel" class="relative w-full col-span-7" data-carousel="slide">
+<div id="default-carousel" class="relative z-10 w-full col-span-7" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-[500px] overflow-hidden rounded-xl shadow-md border-[3px] border-teal-700">
         <!-- Item 1 -->

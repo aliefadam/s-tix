@@ -81,4 +81,11 @@ class PageController extends Controller
             "title" => "Tiket Detail",
         ]);
     }
+
+    public function dashboard()
+    {
+        return view("backend.dashboard", [
+            "title" => "Dashboard",
+        ]);
+    }
 }
