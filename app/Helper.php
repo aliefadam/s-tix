@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Menu;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 if (!function_exists("generateQR")) {
@@ -31,5 +32,19 @@ if (!function_exists("generateQRAsImage")) {
         return QrCode::format('png')
             ->size($size)
             ->generate($code);
+    }
+}
+
+if (!function_exists("getMenuTitle")) {
+    function getMenuTitle()
+    {
+        return Menu::where("type", "title")->get();
+    }
+}
+
+if (!function_exists("getMenuLink")) {
+    function getMenuLink($slug)
+    {
+        return Menu::where("type", "link")->where("slug_id", $slug)->get();
     }
 }

@@ -21,12 +21,18 @@
 
     {{-- Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 </head>
 
 <body class="bg-[#475569] bg-opacity-10">
     @include('components.sidebar-admin')
+    @include('components.topbar-admin')
+    <main class="ml-[250px] mt-[80px] w-[calc(100%-250px)] p-5">
+        @yield('content')
+    </main>
+    @include('components.footer-admin')
 
+    <script type="module" src="{{ asset('js/index.js') }}"></script>
     @yield('script')
 </body>
 
