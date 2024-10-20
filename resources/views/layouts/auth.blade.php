@@ -19,17 +19,31 @@
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-regular.css">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/sharp-light.css">
 
+
     {{-- Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    @include('components.navbar')
-    <main class="p-10 mt-[75px]">
-        @yield('content')
-    </main>
-    @include('components.footer')
+<body class="">
+    <div class="bg-[#475569] bg-opacity-10 w-full h-screen flex justify-center items-center">
+        <main class="shadow-md w-[70%] grid grid-cols-2 rounded-md overflow-hidden">
+            @yield('content')
+        </main>
+    </div>
+
+    @if (session('notification'))
+        @include('components.notification.sweetalert', [
+            'notification' => session('notification'),
+        ])
+    @endif
+
+    @if ($errors->any())
+        @include('components.notification.toast', [
+            'type' => 'error',
+            'message' => $errors->all(),
+        ])
+    @endif
 
     @yield('script')
 </body>

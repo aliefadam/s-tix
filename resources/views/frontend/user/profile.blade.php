@@ -11,7 +11,7 @@
             ],
             'active' => 'Profil',
         ])
-        <a href="{{ route('profile') }}"
+        <a href="{{ route('logout') }}"
             class="border {{ request()->is('profile') ? 'bg-red-700 text-white hover:bg-red-800' : 'border-red-700 text-red-700 hover:bg-red-700 hover:bg-opacity-10' }} duration-200 focus:ring-4 focus:ring-red-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 flex items-center gap-2">
             <i class="fa-regular fa-left-from-bracket"></i>
             Keluar

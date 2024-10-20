@@ -15,8 +15,11 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "animate.css": "^4.1.1",
         "datatables.net-dt": "^2.1.8",
         "flowbite": "^2.5.2",
-        "jquery": "^3.7.1"
+        "jquery": "^3.7.1",
+        "sweetalert2": "^11.14.4",
+        "toastify-js": "^1.12.0"
     }
 }

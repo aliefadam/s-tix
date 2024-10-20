@@ -32,11 +32,6 @@
     border-radius: 5px;
 }
 
-/* .dt-layout-row:first-child .dt-search input:focus {
-    border: 2px solid black;
-    outline: none !important;
-} */
-
 .dt-layout-row:last-child {
     display: flex;
     align-items: center;
@@ -83,4 +78,9 @@
     color: #6b7280;
     border: 1px solid #f3f4f6;
     cursor: default;
+}
+
+.dt-layout-row.dt-layout-table td.dt-empty {
+    text-align: center;
+    padding: 20px 0;
 }

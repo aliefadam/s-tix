@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="Platform Tiket Online">
-    <title>S-TIX Admin | {{ $title }}</title>
+    <title>S-TIX Admin - {{ $title }}</title>
 
     {{-- Common CSS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
