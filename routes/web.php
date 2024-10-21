@@ -2,15 +2,34 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
+use App\Http\Middleware\UserRoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/", [PageController::class, "home"])->name("home");
 
 Route::middleware("guest")->group(function () {
-    Route::get("/login", [AuthController::class, "login"])->name("login");
-    Route::post("/login", [AuthController::class, "loginPost"])->name("login.post");
-    Route::get("/register", [AuthController::class, "register"])->name("register");
-    Route::post("/register", [AuthController::class, "registerPost"])->name("register.post");
+    Route::prefix("/login")->group(function () {
+        Route::get("/", [AuthController::class, "login"])->name("login");
+        Route::post("/", [AuthController::class, "loginPost"])->name("login.post");
+        Route::get("/google", [AuthController::class, "redirectToGoogle"])->name("login.google");
+        Route::get("/google/callback", [AuthController::class, "handleGoogleCallback"])->name("login.google.callback");
+    });
+
+    Route::prefix("/register")->group(function () {
+        Route::get("/", [AuthController::class, "register"])->name("register");
+        Route::post("/", [AuthController::class, "registerPost"])->name("register.post");
+    });
+
+    Route::prefix("/forgot-password")->group(function () {
+        Route::get("/", [AuthController::class, "forgotPassword"])->name("forgot-password");
+        Route::post("/", [AuthController::class, "forgotPasswordPost"])->name("forgot-password.post");
+        Route::get("/done", [AuthController::class, "forgotPasswordDone"])->name("forgot-password.done");
+    });
+
+    Route::prefix("/reset-password")->group(function () {
+        Route::get("/{token}", [AuthController::class, "resetPassword"])->name("password.reset");
+        Route::post("/", [AuthController::class, "resetPasswordPost"])->name("password.update");
+    });
 });
 
 Route::middleware("auth")->group(function () {

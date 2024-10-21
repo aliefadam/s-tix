@@ -32,6 +32,19 @@
     </main>
     @include('components.footer-admin')
 
+    @if ($errors->any())
+        @include('components.notification.toast', [
+            'type' => 'error',
+            'message' => $errors->all(),
+        ])
+    @endif
+
+    @if (session('notification'))
+        @include('components.notification.sweetalert', [
+            'notification' => session('notification'),
+        ])
+    @endif
+
     <script type="module" src="{{ asset('js/index.js') }}"></script>
     @yield('script')
 </body>

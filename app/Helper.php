@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Menu;
+use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 if (!function_exists("generateQR")) {
@@ -38,13 +39,27 @@ if (!function_exists("generateQRAsImage")) {
 if (!function_exists("getMenuTitle")) {
     function getMenuTitle()
     {
-        return Menu::where("type", "title")->get();
+        $role = Auth::user()->role;
+        $menuTitles = collect(Menu::where("type", "title")->get())->filter(function ($menu) use ($role) {
+            $roles = json_decode($menu->role);
+            if (in_array($role, $roles)) {
+                return $menu;
+            }
+        });
+        return $menuTitles;
     }
 }
 
 if (!function_exists("getMenuLink")) {
     function getMenuLink($slug)
     {
-        return Menu::where("type", "link")->where("slug_id", $slug)->get();
+        $role = Auth::user()->role;
+        $menuLinks = collect(Menu::where("type", "link")->where("slug_id", $slug)->get())->filter(function ($menu) use ($role) {
+            $roles = json_decode($menu->role);
+            if (in_array($role, $roles)) {
+                return $menu;
+            }
+        });
+        return $menuLinks;
     }
 }

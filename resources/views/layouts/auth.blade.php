@@ -27,9 +27,7 @@
 
 <body class="">
     <div class="bg-[#475569] bg-opacity-10 w-full h-screen flex justify-center items-center">
-        <main class="shadow-md w-[70%] grid grid-cols-2 rounded-md overflow-hidden">
-            @yield('content')
-        </main>
+        @yield('content')
     </div>
 
     @if (session('notification'))

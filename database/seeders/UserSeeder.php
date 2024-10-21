@@ -21,8 +21,8 @@ class UserSeeder extends Seeder
                 "role" => "super-admin",
             ],
             [
-                'name' => 'Alief Adam',
-                'email' => 'aliefadam6@gmail.com',
+                'name' => 'Adam',
+                'email' => 'aliefadam21@gmail.com',
                 "password" => bcrypt("123"),
                 "role" => "user",
             ],

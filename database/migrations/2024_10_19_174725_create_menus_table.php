@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("icon")->nullable();
             $table->string("slug")->nullable();
             $table->string("slug_id")->nullable();
+            $table->string("role");
             $table->timestamps();
         });
     }

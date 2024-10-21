@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -80,6 +81,11 @@ class PageController extends Controller
         return view("frontend.ticket.ticket-detail", [
             "title" => "Tiket Detail",
         ]);
+    }
+
+    public function directDashboard()
+    {
+        return redirect()->route("admin.dashboard");
     }
 
     public function dashboard()
