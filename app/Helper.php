@@ -63,3 +63,17 @@ if (!function_exists("getMenuLink")) {
         return $menuLinks;
     }
 }
+
+if (!function_exists("static_asset")) {
+    function static_asset($path)
+    {
+        return asset("imgs/{$path}");
+    }
+}
+
+if (!function_exists("upload_asset")) {
+    function upload_asset($path)
+    {
+        return asset("storage/{$path}");
+    }
+}

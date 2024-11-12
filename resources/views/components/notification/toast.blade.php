@@ -8,7 +8,7 @@
             duration: 5000,
             gravity: "bottom",
             stopOnFocus: true,
-            className: `animate__animated animate__fadeInDown text-sm bg-gradient-to-r ${type == "success" ? "from-green-600 to-green-700" : "from-red-600 to-red-700"} absolute z-20 right-5 h-[30px] flex gap-3 justify-center items-center px-5 py-6 text-white rounded-md`,
+            className: `animate__animated animate__fadeInDown text-sm bg-gradient-to-r ${type == "success" ? "from-green-600 to-green-700" : "from-red-600 to-red-700"} fixed z-20 right-5 h-[30px] flex gap-3 justify-center items-center px-5 py-6 text-white rounded-md`,
             close: true,
             callback: function() {
                 $(this)

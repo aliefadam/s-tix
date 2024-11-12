@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\VendorController;
@@ -10,6 +11,9 @@ Route::middleware(AdminRoleMiddleware::class)->group(function () {
     Route::prefix("admin")->group(function () {
         Route::get("/", [PageController::class, "directDashboard"])->name("admin.directDashboard");
         Route::get("/dashboard", [PageController::class, "dashboard"])->name("admin.dashboard");
+
+        Route::get("/change-password", [PageController::class, "changePassword"])->name("admin.changePassword");
+        Route::post("/change-password", [AuthController::class, "changePasswordPost"])->name("admin.changePasswordPost");
 
         Route::resource("vendor", VendorController::class)->names([
             "index" => "admin.vendor.index",
@@ -24,7 +28,7 @@ Route::middleware(AdminRoleMiddleware::class)->group(function () {
             "index" => "admin.event.index",
             "create" => "admin.event.create",
             "store" => "admin.event.store",
-            "edit" => "admin.event.edit",
+            "show" => "admin.event.show",
             "update" => "admin.event.update",
             "destroy" => "admin.event.delete",
         ]);

@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("vendor_id");
+            $table->string("name");
+            $table->double("tax");
+            $table->text("description");
+            $table->date("start_date");
+            $table->time("start_time");
+            $table->date("end_date");
+            $table->time("end_time");
+            $table->string("building_name");
+            $table->string("address");
+            $table->string("maps_link")->nullable();
+            $table->string("banner");
             $table->timestamps();
         });
     }

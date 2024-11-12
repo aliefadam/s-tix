@@ -1,0 +1,90 @@
+/* CK Editor Specific */
+.ck-editor__editable p,
+.ck-editor__editable h1,
+.ck-editor__editable h2,
+.ck-editor__editable h3,
+.ck-editor__editable h4,
+.ck-editor__editable h5,
+.ck-editor__editable h6 {
+    line-height: 25px !important;
+}
+
+.ck-editor__editable ul,
+.ck-editor__editable ol {
+    padding-left: 30px !important;
+}
+
+.ck-editor__editable h1 {
+    font-size: 24px !important;
+    font-weight: bold;
+}
+
+.ck-editor__editable h2 {
+    font-size: 20px !important;
+    font-weight: bold;
+}
+
+.ck-editor__editable h3 {
+    font-size: 18px !important;
+    font-weight: bold;
+}
+
+.ck-editor__editable h4 {
+    font-size: 16px !important;
+    font-weight: bold;
+}
+
+.ck-editor__editable a {
+    color: #007bff !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+}
+
+.about-us {
+    text-align: justify;
+}
+
+.about-us p {
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.about-us ol,
+.about-us ul {
+    list-style: disc;
+    padding-left: 20px !important;
+}
+
+.about-us li {
+    line-height: 1.6;
+}
+
+.about-us h1 {
+    font-size: 24px !important;
+}
+
+.about-us h2 {
+    font-size: 20px !important;
+}
+
+.about-us h3 {
+    font-size: 18px !important;
+}
+
+.about-us h4 {
+    font-size: 16px !important;
+}
+
+.about-us h5 {
+    font-size: 14px !important;
+}
+
+.about-us h6 {
+    font-size: 12px !important;
+}
+
+@media screen and (max-width: 768px) {
+    .about-us p {
+        font-size: 14px;
+    }
+}

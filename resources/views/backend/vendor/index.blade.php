@@ -121,7 +121,6 @@
                 })
             };
             $(".btn-delete").click(confirmationDelete)
-
         });
     </script>
 @endsection

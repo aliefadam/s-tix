@@ -94,4 +94,11 @@ class PageController extends Controller
             "title" => "Dashboard",
         ]);
     }
+
+    public function changePassword()
+    {
+        return view("backend.profile.change-password", [
+            "title" => "Ubah Password",
+        ]);
+    }
 }

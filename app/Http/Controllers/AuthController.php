@@ -175,6 +175,30 @@ class AuthController extends Controller
         ]);
     }
 
+    public function changePasswordPost(Request $request)
+    {
+        $request->validate([
+            "old_password" => "required|current_password",
+            "password" => "required|min:3|confirmed",
+        ], [
+            "old_password.required" => "Kata sandi lama harus diisi",
+            "old_password.current_password" => "Kata sandi lama tidak sesuai",
+            "password.required" => "Kata sandi baru harus diisi",
+            "password.min" => "Kata sandi minimal 8 karakter",
+            "password.confirmed" => "Konfirmasi kata sandi tidak sesuai",
+        ]);
+
+        auth()->user()->update([
+            "password" => bcrypt($request->password)
+        ]);
+
+        return back()->with("notification", [
+            "title" => "Berhasil",
+            "text" => "Merubah Kata Sandi",
+            "icon" => "success",
+        ]);
+    }
+
     public function logout()
     {
         Auth::logout();

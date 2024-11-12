@@ -15,7 +15,6 @@
 
     <div class="mt-10">
         <h1 class="text-center text-3xl poppins-bold text-teal-700">Event</h1>
-
         <div class="grid grid-cols-4 gap-8 mt-10">
             <a href="{{ route('event', 1) }}"
                 class="border border-teal-700 rounded-xl overflow-hidden shadow-md hover:-translate-y-1 duration-200">
