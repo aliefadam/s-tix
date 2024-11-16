@@ -77,3 +77,10 @@ if (!function_exists("upload_asset")) {
         return asset("storage/{$path}");
     }
 }
+
+if (!function_exists("money_format")) {
+    function money_format($number)
+    {
+        return "Rp. " . number_format($number, 0, ',', '.');
+    }
+}

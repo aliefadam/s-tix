@@ -29,48 +29,48 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        $newEvent = $request->validate([
+            "name" => "required",
+            "tax" => "required|numeric",
+            "description" => "required",
+            "start_date" => "required|date",
+            "start_time" => "required|date_format:H:i",
+            "end_date" => "required|date",
+            "end_time" => "required|date_format:H:i",
+            "building_name" => "required",
+            "address" => "required",
+            "maps_link" => "nullable",
+            "banner" => "required",
+        ], [
+            "name.required" => "Nama event harus diisi.",
+            "tax.required" => "Pajak harus diisi.",
+            "tax.numeric" => "Pajak harus berupa angka.",
+            "description.required" => "Deskripsi harus diisi.",
+            "start_date.required" => "Tanggal mulai harus diisi.",
+            "start_date.date" => "Tanggal mulai harus berupa tanggal yang valid.",
+            "start_time.required" => "Waktu mulai harus diisi.",
+            "start_time.date_format" => "Waktu mulai harus dalam format jam:menit (HH:mm).",
+            "end_date.required" => "Tanggal berakhir harus diisi.",
+            "end_date.date" => "Tanggal berakhir harus berupa tanggal yang valid.",
+            "end_time.required" => "Waktu berakhir harus diisi.",
+            "end_time.date_format" => "Waktu berakhir harus dalam format jam:menit (HH:mm).",
+            "building_name.required" => "Nama tempat harus diisi.",
+            "address.required" => "Alamat harus diisi.",
+            "banner.required" => "Banner harus diisi.",
+        ]);
+
+        $startDateTime = strtotime("{$request->start_date} {$request->start_time}");
+        $endDateTime = strtotime("{$request->end_date} {$request->end_time}");
+
+        if ($endDateTime <= $startDateTime) {
+            return back()->withErrors([
+                'end_date' => 'Tanggal dan waktu berakhir harus lebih besar dari tanggal dan waktu mulai.',
+                'end_time' => 'Waktu berakhir harus lebih besar dari waktu mulai.',
+            ])->withInput();
+        }
+
         DB::beginTransaction();
         try {
-            $newEvent = $request->validate([
-                "name" => "required",
-                "tax" => "required|numeric",
-                "description" => "required",
-                "start_date" => "required|date",
-                "start_time" => "required|date_format:H:i",
-                "end_date" => "required|date",
-                "end_time" => "required|date_format:H:i",
-                "building_name" => "required",
-                "address" => "required",
-                "maps_link" => "nullable",
-                "banner" => "required",
-            ], [
-                "name.required" => "Nama event harus diisi.",
-                "tax.required" => "Pajak harus diisi.",
-                "tax.numeric" => "Pajak harus berupa angka.",
-                "description.required" => "Deskripsi harus diisi.",
-                "start_date.required" => "Tanggal mulai harus diisi.",
-                "start_date.date" => "Tanggal mulai harus berupa tanggal yang valid.",
-                "start_time.required" => "Waktu mulai harus diisi.",
-                "start_time.date_format" => "Waktu mulai harus dalam format jam:menit (HH:mm).",
-                "end_date.required" => "Tanggal berakhir harus diisi.",
-                "end_date.date" => "Tanggal berakhir harus berupa tanggal yang valid.",
-                "end_time.required" => "Waktu berakhir harus diisi.",
-                "end_time.date_format" => "Waktu berakhir harus dalam format jam:menit (HH:mm).",
-                "building_name.required" => "Nama tempat harus diisi.",
-                "address.required" => "Alamat harus diisi.",
-                "banner.required" => "Banner harus diisi.",
-            ]);
-
-            $startDateTime = strtotime("{$request->start_date} {$request->start_time}");
-            $endDateTime = strtotime("{$request->end_date} {$request->end_time}");
-
-            if ($endDateTime <= $startDateTime) {
-                return back()->withErrors([
-                    'end_date' => 'Tanggal dan waktu berakhir harus lebih besar dari tanggal dan waktu mulai.',
-                    'end_time' => 'Waktu berakhir harus lebih besar dari waktu mulai.',
-                ])->withInput();
-            }
-
             if ($request->hasFile("banner")) {
                 $file = $request->file("banner");
                 $fileName = "banners/banner-" . Str::slug($request->name) . "." . $file->extension();
@@ -106,46 +106,46 @@ class EventController extends Controller
 
     public function update(Request $request, $id)
     {
+        $updatedEvent = $request->validate([
+            "name" => "required",
+            "tax" => "required|numeric",
+            "description" => "required",
+            "start_date" => "required|date",
+            "start_time" => "required|date_format:H:i",
+            "end_date" => "required|date",
+            "end_time" => "required|date_format:H:i",
+            "building_name" => "required",
+            "address" => "required",
+            "maps_link" => "nullable",
+        ], [
+            "name.required" => "Nama event harus diisi.",
+            "tax.required" => "Pajak harus diisi.",
+            "tax.numeric" => "Pajak harus berupa angka.",
+            "description.required" => "Deskripsi harus diisi.",
+            "start_date.required" => "Tanggal mulai harus diisi.",
+            "start_date.date" => "Tanggal mulai harus berupa tanggal yang valid.",
+            "start_time.required" => "Waktu mulai harus diisi.",
+            "start_time.date_format" => "Waktu mulai harus dalam format jam:menit (HH:mm).",
+            "end_date.required" => "Tanggal berakhir harus diisi.",
+            "end_date.date" => "Tanggal berakhir harus berupa tanggal yang valid.",
+            "end_time.required" => "Waktu berakhir harus diisi.",
+            "end_time.date_format" => "Waktu berakhir harus dalam format jam:menit (HH:mm).",
+            "building_name.required" => "Nama tempat harus diisi.",
+            "address.required" => "Alamat harus diisi.",
+        ]);
+
+        $startDateTime = strtotime("{$request->start_date} {$request->start_time}");
+        $endDateTime = strtotime("{$request->end_date} {$request->end_time}");
+
+        if ($endDateTime <= $startDateTime) {
+            return back()->withErrors([
+                'end_date' => 'Tanggal dan waktu berakhir harus lebih besar dari tanggal dan waktu mulai.',
+                'end_time' => 'Waktu berakhir harus lebih besar dari waktu mulai.',
+            ])->withInput();
+        }
+
         DB::beginTransaction();
         try {
-            $updatedEvent = $request->validate([
-                "name" => "required",
-                "tax" => "required|numeric",
-                "description" => "required",
-                "start_date" => "required|date",
-                "start_time" => "required|date_format:H:i",
-                "end_date" => "required|date",
-                "end_time" => "required|date_format:H:i",
-                "building_name" => "required",
-                "address" => "required",
-                "maps_link" => "nullable",
-            ], [
-                "name.required" => "Nama event harus diisi.",
-                "tax.required" => "Pajak harus diisi.",
-                "tax.numeric" => "Pajak harus berupa angka.",
-                "description.required" => "Deskripsi harus diisi.",
-                "start_date.required" => "Tanggal mulai harus diisi.",
-                "start_date.date" => "Tanggal mulai harus berupa tanggal yang valid.",
-                "start_time.required" => "Waktu mulai harus diisi.",
-                "start_time.date_format" => "Waktu mulai harus dalam format jam:menit (HH:mm).",
-                "end_date.required" => "Tanggal berakhir harus diisi.",
-                "end_date.date" => "Tanggal berakhir harus berupa tanggal yang valid.",
-                "end_time.required" => "Waktu berakhir harus diisi.",
-                "end_time.date_format" => "Waktu berakhir harus dalam format jam:menit (HH:mm).",
-                "building_name.required" => "Nama tempat harus diisi.",
-                "address.required" => "Alamat harus diisi.",
-            ]);
-
-            $startDateTime = strtotime("{$request->start_date} {$request->start_time}");
-            $endDateTime = strtotime("{$request->end_date} {$request->end_time}");
-
-            if ($endDateTime <= $startDateTime) {
-                return back()->withErrors([
-                    'end_date' => 'Tanggal dan waktu berakhir harus lebih besar dari tanggal dan waktu mulai.',
-                    'end_time' => 'Waktu berakhir harus lebih besar dari waktu mulai.',
-                ])->withInput();
-            }
-
             if ($request->hasFile("banner")) {
                 $file = $request->file("banner");
                 $fileName = "banners/banner-" . Str::slug($request->name) . "." . $file->extension();
@@ -170,6 +170,16 @@ class EventController extends Controller
             "title" => "Berhasil",
             "text" => "Mengubah Event",
             "icon" => "success",
+        ]);
+    }
+
+    public function eventDetail($id)
+    {
+        $event = Event::find($id);
+        return view("backend.event.detail", [
+            "title" => $event->name,
+            "event" => $event,
+            "tickets" => $event->ticket,
         ]);
     }
 

@@ -16,4 +16,9 @@ class Event extends Model
         'start_time' => 'datetime:H:i',
         'end_time' => 'datetime:H:i',
     ];
+
+    public function ticket()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

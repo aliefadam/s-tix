@@ -32,7 +32,7 @@
                             <i class="fa-regular fa-pen-to-square"></i>
                             <span class="text-xs poppins-medium">Edit</span>
                         </a>
-                        <a href=""
+                        <a href="{{ route('admin.event.detail', $event->id) }}"
                             class="flex justify-center items-center gap-1 text-blue-600 hover:text-blue-700 duration-200">
                             <i class="fa-regular fa-circle-info"></i>
                             <span class="text-xs poppins-medium">Detail</span>

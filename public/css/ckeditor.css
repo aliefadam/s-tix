@@ -40,51 +40,57 @@
     cursor: pointer !important;
 }
 
-.about-us {
+.ckeditor {
     text-align: justify;
 }
 
-.about-us p {
+.ckeditor p {
     line-height: 1.6;
     text-align: justify;
 }
 
-.about-us ol,
-.about-us ul {
+.ckeditor ol,
+.ckeditor ul {
     list-style: disc;
     padding-left: 20px !important;
 }
 
-.about-us li {
-    line-height: 1.6;
+.ckeditor li {
+    line-height: 1.2;
 }
 
-.about-us h1 {
+.ckeditor h1 {
     font-size: 24px !important;
+    font-weight: bold;
 }
 
-.about-us h2 {
+.ckeditor h2 {
     font-size: 20px !important;
+    font-weight: bold;
 }
 
-.about-us h3 {
+.ckeditor h3 {
     font-size: 18px !important;
+    font-weight: bold;
 }
 
-.about-us h4 {
+.ckeditor h4 {
     font-size: 16px !important;
+    font-weight: bold;
 }
 
-.about-us h5 {
+.ckeditor h5 {
     font-size: 14px !important;
+    font-weight: bold;
 }
 
-.about-us h6 {
+.ckeditor h6 {
     font-size: 12px !important;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 768px) {
-    .about-us p {
+    .ckeditor p {
         font-size: 14px;
     }
 }
