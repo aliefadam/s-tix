@@ -51,10 +51,10 @@ Route::middleware("auth")->group(function () {
 });
 
 Route::prefix("event")->group(function () {
-    Route::get("/{id}", [PageController::class, "event"])->name("event");
-    Route::get("/{id}/tickets", [PageController::class, "eventTickets"])->name("event.tickets");
-    Route::get("/{id}/data-diri", [PageController::class, "eventDataDiri"])->name("event.data-diri");
-    Route::get("/{id}/pembayaran", [PageController::class, "eventPembayaran"])->name("event.pembayaran");
-    Route::get("/{id}/payment", [PageController::class, "eventPayment"])->name("event.payment");
-    Route::get("/{id}/payment-waiting/{invoice}", [PageController::class, "eventPaymentWaiting"])->name("event.payment-waiting");
+    Route::get("/{slug}", [PageController::class, "event"])->name("event");
+    Route::get("/{slug}/tickets", [PageController::class, "eventTickets"])->name("event.tickets");
+    Route::post("/{slug}/data-diri", [PageController::class, "eventDataDiri"])->name("event.data-diri");
+    Route::post("/{slug}/pembayaran", [PageController::class, "eventPembayaran"])->name("event.pembayaran");
+    Route::post("/{slug}/payment", [PageController::class, "eventPayment"])->name("event.payment");
+    Route::get("/{slug}/payment-waiting/{invoice}", [PageController::class, "eventPaymentWaiting"])->name("event.payment-waiting");
 });

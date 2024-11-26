@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\Event;
 use App\Models\Menu;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 
 if (!function_exists("generateQR")) {
     function generateQR($code, $size = 200)
@@ -82,5 +85,12 @@ if (!function_exists("money_format")) {
     function money_format($number)
     {
         return "Rp. " . number_format($number, 0, ',', '.');
+    }
+}
+
+if (!function_exists("formatDate")) {
+    function formatDate($date)
+    {
+        return Carbon::parse($date)->translatedFormat("l, d F Y");
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\TalentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\VendorController;
 use App\Http\Middleware\AdminRoleMiddleware;
@@ -40,6 +41,15 @@ Route::middleware(AdminRoleMiddleware::class)->group(function () {
             Route::post("/{id}", [TicketController::class, "store"])->name("admin.ticket.store");
             Route::put("/{id}", [TicketController::class, "update"])->name("admin.ticket.update");
             Route::delete("/{id}", [TicketController::class, "destroy"])->name("admin.ticket.delete");
+        });
+
+        Route::prefix("talent")->group(function () {
+            Route::get("/", [TalentController::class, "index"])->name("admin.talent.index");
+            Route::get("/create", [TalentController::class, "create"])->name("admin.talent.create");
+            Route::post("/{event_id}", [TalentController::class, "store"])->name("admin.talent.store");
+            Route::get("/{id}", [TalentController::class, "show"])->name("admin.talent.show");
+            Route::put("/{id}", [TalentController::class, "update"])->name("admin.talent.update");
+            Route::delete("/{id}", [TalentController::class, "destroy"])->name("admin.talent.delete");
         });
     });
 });

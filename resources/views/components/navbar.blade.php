@@ -13,8 +13,13 @@
             </div>
         </div>
     </div>
-    @auth
-        <div class="flex items-center gap-3">
+    <div class="flex items-center gap-3">
+        <a href="{{ route('home') }}"
+            class="border {{ request()->is('/') ? 'bg-teal-700 text-white hover:bg-teal-800' : 'border-teal-700 text-teal-700 hover:bg-teal-700 hover:bg-opacity-10' }} duration-200 focus:ring-4 focus:ring-teal-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800 flex items-center gap-2">
+            <i class="fa-regular fa-home"></i>
+            Beranda
+        </a>
+        @auth
             <a href="{{ route('transaction') }}"
                 class="border {{ request()->is('transaction') ? 'bg-teal-700 text-white hover:bg-teal-800' : 'border-teal-700 text-teal-700 hover:bg-teal-700 hover:bg-opacity-10' }} duration-200 focus:ring-4 focus:ring-teal-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800 flex items-center gap-2">
                 <i class="fa-regular fa-money-from-bracket"></i>
@@ -30,18 +35,16 @@
                 <i class="fa-regular fa-user"></i>
                 {{ auth()->user()->name }}
             </a>
-        </div>
-    @else
-        <div class="flex items-center gap-3">
+        @else
             <a href="{{ route('login') }}"
                 class="border border-teal-700 text-teal-700 hover:bg-teal-700 hover:bg-opacity-10 duration-200 focus:ring-4 focus:ring-teal-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">
                 Masuk
             </a>
             <a href="{{ route('register') }}"
-                class="text-white bg-teal-700 hover:bg-teal-800 duration-200 focus:ring-4 focus:ring-teal-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800">
+                class="border border-teal-700 text-teal-700 hover:bg-teal-700 hover:bg-opacity-10 duration-200 focus:ring-4 focus:ring-teal-300 font-medium rounded-xl text-sm px-5 py-2.5 dark:bg-teal-600 dark:hover:bg-teal-700 focus:outline-none dark:focus:ring-teal-800  ">
                 Daftar
             </a>
-        </div>
+        @endauth
+    </div>
 
-    @endauth
 </nav>

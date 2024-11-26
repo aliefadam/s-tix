@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("vendor_id");
             $table->string("name");
+            $table->string("slug");
             $table->double("tax");
             $table->text("description");
             $table->date("start_date");

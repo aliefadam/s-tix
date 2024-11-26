@@ -79,6 +79,7 @@ class EventController extends Controller
             }
 
             $newEvent["vendor_id"] = Auth::user()->vendor->id;
+            $newEvent["slug"] = str()->slug($newEvent["name"]);
             Event::create($newEvent);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -156,6 +157,8 @@ class EventController extends Controller
 
             $updatedEvent["vendor_id"] = Auth::user()->vendor->id;
             $updatedEvent["banner"] = Event::firstWhere("id", $id)->banner;
+            $updatedEvent["slug"] = str()->slug($updatedEvent["name"]);
+
             Event::firstWhere("id", $id)->update($updatedEvent);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -180,8 +183,17 @@ class EventController extends Controller
             "title" => $event->name,
             "event" => $event,
             "tickets" => $event->ticket,
+            "talents" => $event->talent,
         ]);
     }
 
-    public function destroy($id) {}
+    public function destroy($id)
+    {
+        Event::find($id)->delete();
+        session()->flash("notification", [
+            "title" => "Sukses",
+            "text" => "Event berhasil dihapus",
+            "icon" => "success",
+        ]);
+    }
 }

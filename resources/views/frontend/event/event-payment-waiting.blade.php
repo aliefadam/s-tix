@@ -7,7 +7,8 @@
             <span class="poppins-semibold tlg:ext-2xl text-xl text-teal-700 w-[200px] text-center" id="countdown"
                 data-batas-akhir-pembayaran="">00:00:00</span>
             <span class="text-gray-700 mt-2 lg:text-base text-sm">Batas Akhir Pembayaran</span>
-            <h1 class="poppins-semibold lg:text-xl text-[15px] text-teal-700">Kamis, 27 Oktober 2024 - 20:00</h1>
+            <h1 class="poppins-semibold lg:text-xl text-[15px] text-teal-700">
+                {{ formatDate(json_decode($transaction->payment)->expiration_date) }}</h1>
         </div>
 
         {{-- Kalau metode pembayaran QR --}}
@@ -27,7 +28,8 @@
                 <div class="flex items-center justify-between p-5 border-b">
                     <h1 class="lg:text-sm text-xs">Nomor Virtual Account</h1>
                     <div class="flex items-center gap-2">
-                        <span class="poppins-semibold lg:text-base text-sm">909090909090</span>
+                        <span
+                            class="poppins-semibold lg:text-base text-sm">{{ json_decode($transaction->payment)->data }}</span>
                         <i id="btn-salin-va" data-virtual-account="909090909090"
                             class="cursor-pointer fa-regular fa-copy text-teal-700 hover:text-teal-800 text-semibold"></i>
                     </div>
@@ -36,7 +38,7 @@
             <div class="flex items-center justify-between p-5 border-b">
                 <h1 class="lg:text-sm text-xs">Total Tagihan</h1>
                 <div class="flex items-center gap-2">
-                    <span class="poppins-semibold lg:text-base text-sm">Rp. 100,000</span>
+                    <span class="poppins-semibold lg:text-base text-sm">{{ money_format($transaction->total) }}</span>
                     <span data-modal-target="detail-transaksi-modal" data-modal-toggle="detail-transaksi-modal"
                         class="cursor-pointer text-teal-700 hover:text-teal-800 poppins-semibold lg:text-base text-sm">Lihat
                         Detail</span>
@@ -58,7 +60,7 @@
         </div>
 
         <div class="lg:w-[45%] w-[95%] flex gap-3 lg:mt-8 mt-5">
-            <a href=""
+            <a href="{{ route('transaction') }}"
                 class="text-center lg:py-2.5 py-2 flex-[1] text-sm poppins-semibold rounded-lg hover:bg-teal-700 hover:bg-opacity-20 text-teal-700 border border-teal-700">
                 Lihat Transaksi
             </a>

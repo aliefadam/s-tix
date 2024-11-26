@@ -37,8 +37,8 @@
                             <i class="fa-regular fa-circle-info"></i>
                             <span class="text-xs poppins-medium">Detail</span>
                         </a>
-                        <a href=""
-                            class="flex justify-center items-center gap-1 text-red-600 hover:text-red-700 duration-200">
+                        <a href="javascript:void(0)" data-id="{{ $event->id }}"
+                            class="btn-delete-event flex justify-center items-center gap-1 text-red-600 hover:text-red-700 duration-200">
                             <i class="fa-regular fa-trash"></i>
                             <span class="text-xs poppins-medium">Hapus</span>
                         </a>
@@ -47,4 +47,38 @@
             @endforeach
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script type="module">
+        $(".btn-delete-event").click(deleteEvent);
+
+        function deleteEvent() {
+            const eventID = $(this).data("event-id");
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak bisa mengembalikan aksi ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus tiket ini!',
+                cancelButtonText: 'Batal',
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return $.ajax({
+                        url: `/admin/talent/${eventID}`,
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    })
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
 @endsection

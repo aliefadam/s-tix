@@ -16,34 +16,32 @@
     <div class="mt-10">
         <h1 class="text-center text-3xl poppins-bold text-teal-700">Event</h1>
         <div class="grid grid-cols-4 gap-8 mt-10">
-            <a href="{{ route('event', 1) }}"
-                class="border border-teal-700 rounded-xl overflow-hidden shadow-md hover:-translate-y-1 duration-200">
-                <img src="{{ asset('imgs/event-1.jpg') }}" class="object-cover w-full h-[220px]" alt="">
-                <div class="p-4 flex flex-col gap-1 border-b border-teal-700">
-                    <span class="text-xs text-gray-500 poppins-medium">24 September 2024</span>
-                    <span class="uppercase poppins-semibold text-[15px] text-teal-700">Smarista Smart Festival x
-                        FestaFest</span>
-                    <div class="mt-1 flex items-center gap-1.5">
-                        <i class="text-xs fa-regular fa-location-dot"></i>
-                        <span class="text-xs poppins-medium">
-                            {{ Str::limit(
-                                'SMA NEGERI 1 TULUNGAGUNG | Jl. Fatahilah, Botoran, Tulungagung Regency, East Java, Indonesia',
-                                40,
-                                '...',
-                            ) }}
+            @foreach ($events as $event)
+                <a href="{{ route('event', $event->slug) }}"
+                    class="border border-teal-700 rounded-xl overflow-hidden shadow-md hover:-translate-y-1 duration-200">
+                    <img src="{{ upload_asset($event->banner) }}" class="object-cover w-full h-[220px]" alt="">
+                    <div class="p-4 flex flex-col gap-1 border-b border-teal-700">
+                        <span
+                            class="text-xs text-gray-500 poppins-medium">{{ $event->start_date->translatedFormat('l, d F Y') }}</span>
+                        <span class="uppercase poppins-semibold text-[15px] text-teal-700">{{ $event->name }}</span>
+                        <div class="mt-1 flex items-center gap-1.5">
+                            <i class="text-xs fa-regular fa-location-dot"></i>
+                            <span class="text-xs poppins-medium">
+                                {{ Str::limit("{$event->building_name} | {$event->address}", 40, '...') }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-3.5 flex items-center justify-between">
+                        <span class="text-sm">
+                            Mulai Dari
+                        </span>
+                        <span class="text-sm poppins-semibold text-teal-700">
+                            {{ money_format($event->ticket()->min('price')) }}
                         </span>
                     </div>
-                </div>
-                <div class="p-3.5 flex items-center justify-between">
-                    <span class="text-sm">
-                        Mulai Dari
-                    </span>
-                    <span class="text-sm poppins-semibold text-teal-700">
-                        Rp. 75.000
-                    </span>
-                </div>
-            </a>
-            <a href="{{ route('event', 1) }}"
+                </a>
+            @endforeach
+            {{-- <a href="{{ route('event', 1) }}"
                 class="border border-teal-700 rounded-xl overflow-hidden shadow-md hover:-translate-y-1 duration-200">
                 <img src="{{ asset('imgs/event-2.jpg') }}" class="object-cover w-full h-[220px]" alt="">
                 <div class="p-4 flex flex-col gap-1 border-b border-teal-700">
@@ -116,7 +114,7 @@
                         Rp. 35.000
                     </span>
                 </div>
-            </a>
+            </a> --}}
         </div>
     </div>
 @endsection

@@ -17,8 +17,18 @@ class Event extends Model
         'end_time' => 'datetime:H:i',
     ];
 
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
     public function ticket()
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function talent()
+    {
+        return $this->hasMany(Talent::class);
     }
 }

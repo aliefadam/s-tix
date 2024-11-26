@@ -35,64 +35,68 @@
                 </div>
             </div>
             <div id="history-container" class="lg:mt-5 flex flex-col gap-5">
-                <div class="bg-white rounded-lg shadow-lg border lg:p-5 p-3">
-                    <div class="flex items-center justify-between text-sm lg:gap-0 gap-3">
-                        <span class="lg:text-sm text-xs text-gray-700 poppins-medium">Belanja Pada 27 September 2024 - 20:00
-                            WIB</span>
-                        <div class="flex items-center lg:text-sm text-xs text-center gap-3">
-                            <span class="bg-amber-100 text-amber-600 poppins-semibold px-4 py-2.5 rounded-md">
-                                Menunggu Pembayaran
+                @foreach ($transactions as $transaction)
+                    <div class="bg-white rounded-lg shadow-lg border lg:p-5 p-3">
+                        <div class="flex items-center justify-between text-sm lg:gap-0 gap-3">
+                            <span class="lg:text-sm text-xs text-gray-700 poppins-medium">Belanja Pada
+                                {{ formatDate($transaction->created_at) }} -
+                                {{ $transaction->created_at->format('H:i') }} WIB
                             </span>
+                            <div class="flex items-center lg:text-sm text-xs text-center gap-3">
+                                <span class="bg-amber-100 text-amber-600 poppins-semibold px-4 py-2.5 rounded-md">
+                                    {{ $transaction->status }}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex justify-between mt-5">
-                        <div class="flex-[2] flex flex-col gap-5">
-                            <div class="flex">
-                                <div class="flex-[3] flex-col gap-3">
-                                    <div class="flex lg:gap-5 gap-3">
-                                        <img src="{{ asset('imgs/event-1.jpg') }}" class="lg:w-[200px] w-[80px] rounded-md">
-                                        <div class="flex flex-col gap-1">
-                                            <span class="poppins-medium">Smarista Smart Festival x FestaFest</span>
-                                            <span class="text-sm">
-                                                1 Tiket
-                                                X
-                                                Rp. 100,000
-                                            </span>
+                        <div class="flex justify-between mt-5">
+                            <div class="flex-[2] flex flex-col gap-5">
+                                <div class="flex">
+                                    <div class="flex-[3] flex-col gap-3">
+                                        <div class="flex lg:gap-5 gap-3">
+                                            <img src="{{ asset('imgs/event-1.jpg') }}"
+                                                class="lg:w-[200px] w-[80px] rounded-md">
+                                            <div class="flex flex-col gap-1">
+                                                <span class="poppins-medium">{{ $transaction->event->name }}</span>
+                                                <span class="text-sm text-gray-600">
+                                                    {{ $transaction->transaction_detail()->where('ticket_id', '!=', null)->get()->count() }}
+                                                    Tiket Dipesan
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="flex-[1] flex flex-col gap-2 items-end">
+                                <span class="text-sm leading-none">Total Transaksi</span>
+                                <span class="poppins-semibold">{{ money_format($transaction->total) }}</span>
+                            </div>
                         </div>
-                        <div class="flex-[1] flex flex-col gap-2 items-end">
-                            <span class="text-sm leading-none">Total Transaksi</span>
-                            <span class="poppins-semibold">Rp. 100,000</span>
-                        </div>
-                    </div>
 
-                    <div class="flex justify-end gap-2 mt-5">
-                        <button data-order-id="" data-modal-target="detail-transaksi-modal"
-                            data-modal-toggle="detail-transaksi-modal"
-                            class="btn-detail-transaksi w-[220px] text-center lg:text-sm text-xs px-3 py-2 rounded-lg poppins-semibold text-teal-700 border border-teal-700 cursor-pointer hover:bg-teal-800 hover:bg-opacity-20 duration-200">
-                            <i class="fa-regular fa-eye mr-1"></i>
-                            Lihat Detail Transaksi
-                        </button>
-                        <?php $order['status'] = 'Menunggu Pembayaran'; ?>
-                        @if ($order['status'] == 'Menunggu Pembayaran')
-                            <button data-order-id="" data-modal-target="pembatalan-transaksi-modal"
-                                data-modal-toggle="pembatalan-transaksi-modal"
-                                class="btn-batalkan-transaksi w-[220px] text-center lg:text-sm text-xs px-3 py-2 rounded-lg border border-red-700 text-red-700 poppins-semibold cursor-pointer hover:bg-red-800 hover:bg-opacity-20 duration-200">
-                                <i class="fa-regular fa-ban mr-1"></i>
-                                Batalkan Transaksi
+                        <div class="flex justify-end gap-2 mt-5">
+                            <button data-order-id="" data-modal-target="detail-transaksi-modal"
+                                data-modal-toggle="detail-transaksi-modal"
+                                class="btn-detail-transaksi w-[220px] text-center lg:text-sm text-xs px-3 py-2 rounded-lg poppins-semibold text-teal-700 border border-teal-700 cursor-pointer hover:bg-teal-800 hover:bg-opacity-20 duration-200">
+                                <i class="fa-regular fa-eye mr-1"></i>
+                                Lihat Detail Transaksi
                             </button>
-                        @elseif($order['status'] == 'Dalam Pengiriman')
-                            <span data-order-id=""
-                                class="btn-terima-pesanan w-[220px] text-center lg:text-sm text-xs px-3 py-2 rounded-lg bg-green-700 poppins-semibold text-white cursor-pointer hover:bg-green-800">
-                                <i class="fa-regular fa-person-carry-box mr-1.5"></i>
-                                Pesanan Telah Diterima
-                            </span>
-                        @endif
+                            <?php $order['status'] = 'Menunggu Pembayaran'; ?>
+                            @if ($order['status'] == 'Menunggu Pembayaran')
+                                <button data-order-id="" data-modal-target="pembatalan-transaksi-modal"
+                                    data-modal-toggle="pembatalan-transaksi-modal"
+                                    class="btn-batalkan-transaksi w-[220px] text-center lg:text-sm text-xs px-3 py-2 rounded-lg border border-red-700 text-red-700 poppins-semibold cursor-pointer hover:bg-red-800 hover:bg-opacity-20 duration-200">
+                                    <i class="fa-regular fa-ban mr-1"></i>
+                                    Batalkan Transaksi
+                                </button>
+                            @elseif($order['status'] == 'Dalam Pengiriman')
+                                <span data-order-id=""
+                                    class="btn-terima-pesanan w-[220px] text-center lg:text-sm text-xs px-3 py-2 rounded-lg bg-green-700 poppins-semibold text-white cursor-pointer hover:bg-green-800">
+                                    <i class="fa-regular fa-person-carry-box mr-1.5"></i>
+                                    Pesanan Telah Diterima
+                                </span>
+                            @endif
+                        </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

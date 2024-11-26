@@ -55,9 +55,8 @@
                     <div class="">
                         <h1 class="poppins-medium text-lg">Lokasi</h1>
                         <div class="mt-5 flex gap-1 items-center">
-                            <p>{{ $event->building_name }}</p>
-                            |
-                            <p>{{ $event->address }}</p>
+                            <p class="leading-5"><span class="poppins-medium">{{ $event->building_name }}</span> |
+                                {{ $event->address }}</p>
                         </div>
                         <a target="_blank" href="{{ $event->maps_link }}"
                             class="mt-2 block text-sm text-blue-500 hover:text-blue-600">
@@ -120,26 +119,29 @@
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
-                <div class="mt-5 flex flex-col gap-6">
-                    <div class="border rounded-md px-5 py-3 relative overflow-hiddens">
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <img class="w-[50px] h-[50px] rounded-full object-cover"
-                                    src="{{ static_asset('lineup-1.jpg') }}" alt="">
-                                <span class="text-sm poppins-medium">Meiska</span>
-                            </div>
-                            <div class="flex justify-center gap-2">
-                                <button
-                                    class="border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white duration-200 bg-white rounded-md p-2">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </button>
-                                <button
-                                    class="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white duration-200 bg-white rounded-md p-2">
-                                    <i class="fa-regular fa-trash"></i>
-                                </button>
+                <div class="mt-5 flex flex-col gap-3">
+                    @foreach ($talents as $talent)
+                        <div class="border rounded-md px-5 py-3 relative overflow-hiddens">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <img class="w-[50px] h-[50px] rounded-full object-cover"
+                                        src="{{ upload_asset($talent->image) }}" alt="">
+                                    <span class="text-sm poppins-medium">{{ $talent->name }}</span>
+                                </div>
+                                <div class="flex justify-center gap-2">
+                                    <button data-talent-id="{{ $talent->id }}" data-modal-target="edit-talent-modal"
+                                        data-modal-toggle="edit-talent-modal"
+                                        class="btn-edit-talent border border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white duration-200 bg-white rounded-md p-2">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </button>
+                                    <button data-talent-id="{{ $talent->id }}"
+                                        class="btn-delete-talent border border-red-600 text-red-600 hover:bg-red-600 hover:text-white duration-200 bg-white rounded-md p-2">
+                                        <i class="fa-regular fa-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -304,7 +306,8 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <form action="" method="POST">
+                <form action="{{ route('admin.talent.store', $event->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <!-- Modal body -->
                     <div class="p-4 md:p-5">
@@ -312,16 +315,15 @@
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Nama Talent
                             </label>
-                            <input type="text" id="name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
+                            <input type="text" id="name" name="name"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         </div>
                         <div class="">
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 for="image">Foto Talent | Gunakan Ukuran 1:1</label>
                             <input
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                id="image" type="file">
+                                id="image" name="image" type="file">
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -331,6 +333,77 @@
                             Tambah
                         </button>
                         <button data-modal-hide="add-talent-modal" type="button"
+                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                            Batal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Edit Talent Modal --}}
+    <div id="edit-talent-modal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Edit Talent
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-hide="edit-talent-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <form id="form-edit-talent" action="{{ route('admin.talent.update', $event->id) }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <!-- Modal body -->
+                    <div id="loading-indicator-edit-talent" class="flex justify-center items-center h-[200px]">
+                        @include('components.loading-indicator')
+                    </div>
+                    <div id="show-after-loading-indicator-edit-talent" class="hidden">
+                        <div class="p-4 md:p-5">
+                            <div class="mb-5">
+                                <label for="name-talent-edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    Nama Talent
+                                </label>
+                                <input type="text" id="name-talent-edit" name="name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            </div>
+                            <div class="mb-5">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    for="image">Foto Lama</label>
+                                <img src="asd" alt="Foto Talent" class="size-[200px] border object-cover"
+                                    id="foto-lama">
+                            </div>
+                            <div class="">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    for="image">Ganti Foto Talent | Gunakan Ukuran 1:1</label>
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    id="image" name="image" type="file">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <button type="submit"
+                            class="text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800">
+                            Simpan
+                        </button>
+                        <button data-modal-hide="edit-talent-modal" type="button"
                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                             Batal
                         </button>
@@ -443,6 +516,8 @@
     <script type="module">
         $(".btn-edit-ticket").click(showEditTicketModal);
         $(".btn-delete-ticket").click(deleteTicket);
+        $(".btn-edit-talent").click(showEditTalentModal);
+        $(".btn-delete-talent").click(deleteTalent);
 
         function showEditTicketModal() {
             const ticketID = $(this).data("ticket-id");
@@ -490,6 +565,56 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
+                    })
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
+        }
+
+        function showEditTalentModal() {
+            const talentID = $(this).data("talent-id");
+            $.ajax({
+                type: "GET",
+                url: `/admin/talent/${talentID}`,
+                beforeSend: function() {
+                    $("#loading-indicator-edit-talent").removeClass("hidden");
+                    $("#show-after-loading-indicator-edit-talent").addClass("hidden");
+                },
+                success: function(response) {
+                    $("#loading-indicator-edit-talent").addClass("hidden");
+                    $("#show-after-loading-indicator-edit-talent").removeClass("hidden");
+                    const {
+                        name,
+                        image
+                    } = response.talent;
+                    $("#name-talent-edit").val(name);
+                    $("#foto-lama").attr("src", `/storage/${image}`);
+                }
+            });
+        }
+
+        function deleteTalent() {
+            const talentID = $(this).data("talent-id");
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda tidak bisa mengembalikan aksi ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus tiket ini!',
+                cancelButtonText: 'Batal',
+                showLoaderOnConfirm: true,
+                preConfirm: () => {
+                    return $.ajax({
+                        url: `/admin/talent/${talentID}`,
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                     })
                 }
             }).then((result) => {

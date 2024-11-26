@@ -42,6 +42,9 @@ class AuthController extends Controller
             } else if (Auth::user()->role == "vendor") {
                 return redirect()->route("admin.dashboard");
             } else if (Auth::user()->role == "user") {
+                if (session("redirect")) {
+                    return redirect(session("redirect")["route"]);
+                }
                 return redirect()->route("home");
             }
         } else {
