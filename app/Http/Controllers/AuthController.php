@@ -202,6 +202,34 @@ class AuthController extends Controller
         ]);
     }
 
+    public function update(Request $request)
+    {
+        $updatedData = [
+            "nama_lengkap" => $request->nama_lengkap,
+            "date" => $request->date,
+            "month" => $request->month,
+            "year" => $request->year,
+            "gender" => $request->gender ?? null,
+            "date_of_birth" => $request->year . "-" . $request->month . "-" . $request->date,
+            "whatsapp" => $request->whatsapp,
+            "identity_type" => $request->identity_type,
+            "identity_number" => $request->identity_number,
+            "works" => $request->works,
+            "height" => $request->height,
+            "weight" => $request->weight,
+            "religion" => $request->religion,
+            "region" => $request->region,
+            "blood_type" => $request->blood_type,
+        ];
+
+        User::firstWhere("id", Auth::user()->id)->update($updatedData);
+        return back()->with("notification", [
+            "title" => "Berhasil",
+            "text" => "Merubah Data Diri",
+            "icon" => "success",
+        ]);
+    }
+
     public function logout()
     {
         Auth::logout();

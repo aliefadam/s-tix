@@ -46,98 +46,88 @@
     <div id="default-styled-tab-content">
         <div class="hidden p-4 rounded-lg" id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
             <h1 class="text-center text-2xl poppins-semibold text-teal-700">Edit Profil</h1>
-            <form action="" class="grid grid-cols-2 gap-5 mt-8">
+            <form action="{{ route('profile.update') }}" method="POST" class="grid grid-cols-2 w-[80%] mx-auto gap-5 mt-8">
+                @csrf
+                @method('PUT')
                 <div class="">
                     <div class="mb-5">
                         <label for="nama_lengkap" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Nama Lengkap
                         </label>
-                        <input type="text" id="nama_lengkap"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
-                            required />
+                        <input type="text" id="nama_lengkap" name="nama_lengkap" value="{{ $profile->name }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                     </div>
                     <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Email
                         </label>
-                        <input type="email" id="email"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
-                            required />
+                        <input type="email" id="email" name="email" value="{{ $profile->email }}" disabled
+                            class="cursor-not-allowed bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" />
                     </div>
                     <div class="mb-5">
-                        <label for="tanggal_lahir"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
                             Lahir</label>
                         <div class="grid grid-cols-3 gap-5">
-                            <select id="countries"
+                            <select id="date" name="date"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
-                                <option selected>Tanggal</option>
+                                <option>Tanggal</option>
                                 @for ($i = 1; $i <= 31; $i++)
-                                    <option>{{ $i }}</option>
+                                    <option @selected($i == getDatePart($profile->date_of_birth, 'day')) value="{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}">
+                                        {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
+                                    </option>
                                 @endfor
                             </select>
-                            <select id="countries"
+                            <select id="month" name="month"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
-                                <option selected>Bulan</option>
+                                <option>Bulan</option>
                                 @for ($i = 1; $i <= 12; $i++)
-                                    <option>{{ $i }}</option>
+                                    <option @selected($i == getDatePart($profile->date_of_birth, 'month')) value="{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}">
+                                        {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
+                                    </option>
                                 @endfor
                             </select>
-                            <select id="countries"
+                            <select id="year" name="year"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
-                                <option selected>Tahun</option>
+                                <option>Tahun</option>
                                 @for ($i = date('Y'); $i >= date('Y') - 100; $i--)
-                                    <option>{{ $i }}</option>
+                                    <option @selected($i == getDatePart($profile->date_of_birth, 'year')) value="{{ $i }}">{{ $i }}
+                                    </option>
                                 @endfor
                             </select>
                         </div>
                     </div>
 
                     <div class="mb-5">
-                        <label for="nama_lengkap" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="whatsapp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Nomor Whatsapp
                         </label>
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <span class="text-gray-700 text-sm poppins-medium">+62</span>
+                                <span class="text-gray-700 text-sm poppins-semibold">+62</span>
                             </div>
-                            <input type="number" id="simple-search"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full ps-10 p-2.5 pl-12 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
+                            <input type="number" id="whatsapp" name="whatsapp" value="{{ $profile->whatsapp }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full ps-11 p-2.5 pl-12 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                         </div>
                     </div>
                     <div class="mb-5">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor
+                        <label for="identity_type"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor
                             Identitas</label>
                         <div class="flex">
-                            <button id="dropdown-button" data-dropdown-toggle="dropdown"
-                                class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                                type="button">Pilih Identitas <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg></button>
-                            <div id="dropdown"
-                                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                                    <li>
-                                        <button type="button"
-                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">KTP</button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Passport</button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">SIM</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="relative w-full">
-                                <input type="search" id="search-dropdown"
-                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-teal-500"
-                                    required />
-                            </div>
+                            <select id="identity_type" name="identity_type"
+                                class="poppins-medium bg-gray-100 rounded-s-lg border border-gray-300 text-gray-900 text-sm focus:ring-teal-500 focus:border-teal-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
+                                <option selected>Pilih Identitas</option>
+                                <option {{ $profile->identity_type == 'KTP' ? 'selected' : '' }} value="KTP">KTP
+                                </option>
+                                <option {{ $profile->identity_type == 'SIM' ? 'selected' : '' }} value="SIM">SIM
+                                </option>
+                                <option {{ $profile->identity_type == 'PASSPORT' ? 'selected' : '' }} value="PASSPORT">
+                                    Passport
+                                </option>
+                            </select>
+                            <input type="number" id="identity_number" name="identity_number"
+                                value="{{ $profile->identity_number }}"
+                                class="bg-gray-50 rounded-e-lg border border-gray-300 text-gray-900 text-sm focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                         </div>
                     </div>
                     <div class="mb-5">
@@ -145,17 +135,19 @@
                             Kelamin</label>
                         <div class="grid grid-cols-2 gap-5">
                             <div class="flex items-center ps-4 border border-gray-200 rounded-md dark:border-gray-700">
-                                <input id="bordered-radio-1" type="radio" value="" name="bordered-radio"
+                                <input @checked($profile->gender == 'Laki-laki') id="laki-laki" type="radio" value="Laki-laki"
+                                    name="gender"
                                     class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="bordered-radio-1"
+                                <label for="laki-laki"
                                     class="w-full py-2.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                     Laki-laki
                                 </label>
                             </div>
                             <div class="flex items-center ps-4 border border-gray-200 rounded-md dark:border-gray-700">
-                                <input id="bordered-radio-2" type="radio" value="" name="bordered-radio"
+                                <input @checked($profile->gender == 'Perempuan') id="perempuan" type="radio" value="Perempuan"
+                                    name="gender"
                                     class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="bordered-radio-2"
+                                <label for="perempuan"
                                     class="w-full py-2.5 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                                     Perempuan
                                 </label>
@@ -165,73 +157,78 @@
                 </div>
                 <div class="">
                     <div class="mb-5">
-                        <label for="pekerjaan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="works" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Pekerjaan
                         </label>
-                        <input type="text" id="pekerjaan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
-                            required />
+                        <input type="text" id="works" name="works" value="{{ $profile->works }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                     </div>
                     <div class="mb-5">
-                        <label for="tinggi_badan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Tinggi Badan
                         </label>
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none">
                                 <span class="text-gray-700 text-sm poppins-medium">CM</span>
                             </div>
-                            <input type="number" id="tinggi_badan" name="tinggi_badan"
+                            <input type="number" id="height" name="height" value="{{ $profile->height }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                         </div>
                     </div>
                     <div class="mb-5">
-                        <label for="berat_badan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Berat Badan
                         </label>
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none">
                                 <span class="text-gray-700 text-sm poppins-medium">KG</span>
                             </div>
-                            <input type="number" id="berat_badan" name="berat_badan"
+                            <input type="number" id="weight" name="weight" value="{{ $profile->weight }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                         </div>
                     </div>
                     <div class="mb-5">
-                        <label for="countries"
+                        <label for="religion"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agama</label>
-                        <select id="countries"
+                        <select id="religion" name="religion"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
-                            <option selected>Pilih Agama</option>
-                            <option value="Islam">Islam</option>
-                            <option value="Kristen">Kristen</option>
-                            <option value="Hindu">Hindu</option>
-                            <option value="Budha">Budha</option>
-                            <option value="Konghucu">Konghucu</option>
+                            <option>Pilih Agama</option>
+                            <option {{ $profile->religion == 'Islam' ? 'selected' : '' }} value="Islam">Islam</option>
+                            <option {{ $profile->religion == 'Kristen' ? 'selected' : '' }} value="Kristen">Kristen
+                            </option>
+                            <option {{ $profile->religion == 'Hindu' ? 'selected' : '' }} value="Hindu">Hindu</option>
+                            <option {{ $profile->religion == 'Budha' ? 'selected' : '' }} value="Budha">Budha</option>
+                            <option {{ $profile->religion == 'Konghucu' ? 'selected' : '' }} value="Konghucu">Konghucu
+                            </option>
                         </select>
                     </div>
                     <div class="mb-5">
-                        <label for="countries"
+                        <label for="region"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kebangsaan</label>
-                        <select id="countries"
+                        <select id="region" name="region"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
                             <option selected>Pilih Kebangsaan</option>
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Malaysia">Malaysia</option>
-                            <option value="Singapura">Singapura</option>
-                            <option value="Brunei">Brunei</option>
-                            <option value="Filipina">Filipina</option>
+                            <option {{ $profile->region == 'Indonesia' ? 'selected' : '' }} value="Indonesia">Indonesia
+                            </option>
+                            <option {{ $profile->region == 'Malaysia' ? 'selected' : '' }} value="Malaysia">Malaysia
+                            </option>
+                            <option {{ $profile->region == 'Singapura' ? 'selected' : '' }} value="Singapura">Singapura
+                            </option>
+                            <option {{ $profile->region == 'Brunei' ? 'selected' : '' }} value="Brunei">Brunei</option>
+                            <option {{ $profile->region == 'Filipina' ? 'selected' : '' }} value="Filipina">Filipina
+                            </option>
                         </select>
                     </div>
                     <div class="mb-5">
-                        <label for="countries"
+                        <label for="blood_type"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Golongan Darah</label>
-                        <select id="countries"
+                        <select id="blood_type" name="blood_type"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
                             <option selected>Pilih Golongan Darah</option>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="AB">AB</option>
-                            <option value="O">O</option>
+                            <option {{ $profile->blood_type == 'A' ? 'selected' : '' }} value="A">A</option>
+                            <option {{ $profile->blood_type == 'B' ? 'selected' : '' }} value="B">B</option>
+                            <option {{ $profile->blood_type == 'AB' ? 'selected' : '' }} value="AB">AB</option>
+                            <option {{ $profile->blood_type == 'O' ? 'selected' : '' }} value="O">O</option>
                         </select>
                     </div>
                 </div>
@@ -252,16 +249,14 @@
                         Kata Sandi Lama
                     </label>
                     <input type="password" id="kata_sandi_lama"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
-                        required />
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                 </div>
                 <div class="mb-5">
                     <label for="kata_sandi_baru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Kata Sandi Baru
                     </label>
                     <input type="password" id="kata_sandi_baru"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
-                        required />
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                 </div>
                 <div class="mb-5">
                     <label for="konfirmasi_kata_sandi_baru"
@@ -269,8 +264,7 @@
                         Konfirmasi Kata Sandi Baru
                     </label>
                     <input type="password" id="konfirmasi_kata_sandi_baru"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
-                        required />
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                 </div>
                 <div class="flex justify-center items-center mt-8 col-span-2">
                     <button type="submit"
