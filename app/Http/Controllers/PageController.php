@@ -119,12 +119,6 @@ class PageController extends Controller
         ]);
     }
 
-    public function eventPayment(Request $request, $slug)
-    {
-        $response = TransactionController::store($request, $slug);
-        return $response;
-    }
-
     public function eventPaymentWaiting($slug, $invoice)
     {
         return view("frontend.event.event-payment-waiting", [

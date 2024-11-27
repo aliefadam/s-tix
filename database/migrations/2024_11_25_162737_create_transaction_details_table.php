@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
             $table->string('handphone')->nullable();
-            $table->string('entity_type')->nullable();
-            $table->string('entity_number')->nullable();
+            $table->string('identity_type')->nullable();
+            $table->string('identity_number')->nullable();
             $table->string("e_ticket")->nullable();
             $table->timestamps();
         });

@@ -1,5 +1,6 @@
 import "./bootstrap";
 import "flowbite";
+import { initFlowbite } from "flowbite";
 import $ from "jquery";
 import DataTable from "datatables.net-dt";
 import Toastify from "toastify-js";
@@ -15,3 +16,4 @@ window.Toastify = Toastify;
 window.Swal = Swal;
 window.loadingIndicator = loadingIndicator;
 window.formatMoney = formatMoney;
+window.initFlowbite = initFlowbite;

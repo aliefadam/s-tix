@@ -26,10 +26,11 @@
 
 <body>
     @include('components.navbar')
-    <main class="p-10 mt-[75px]">
+    <main class="p-10 mt-[75px] min-h-screen">
         @yield('content')
     </main>
     @include('components.footer')
+
 
     @yield('script')
 </body>

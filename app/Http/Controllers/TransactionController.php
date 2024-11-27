@@ -21,7 +21,7 @@ class TransactionController extends Controller
         return view("backend.transaction.create");
     }
 
-    public static function store(Request $request, $slug)
+    public function store(Request $request, $slug)
     {
         try {
             DB::beginTransaction();
@@ -57,7 +57,7 @@ class TransactionController extends Controller
                 "email" => $pembeli->email,
                 "date_of_birth" => $pembeli->tanggal_lahir,
                 "gender" => $pembeli->jenis_kelamin,
-                "identiy_type" => $pembeli->tipe_identitas,
+                "identity_type" => $pembeli->tipe_identitas,
                 "identity_number" => $pembeli->nomor_identitas,
                 "e_ticket" => null,
             ]);
@@ -71,7 +71,7 @@ class TransactionController extends Controller
                     "email" => $pengunjung->email,
                     "date_of_birth" => $pengunjung->tanggal_lahir,
                     "gender" => $pengunjung->jenis_kelamin,
-                    "identiy_type" => $pengunjung->tipe_identitas,
+                    "identity_type" => $pengunjung->tipe_identitas,
                     "identity_number" => $pengunjung->nomor_identitas,
                     "e_ticket" => "E-TICKET-" . Str::upper(Str::random(10)) . Auth::user()->id . "-" . date("Ymd"),
                 ]);
@@ -90,7 +90,11 @@ class TransactionController extends Controller
 
     public function show($id)
     {
-        // TODO: Implement show() method.
+        return response()->json([
+            "view" => view("components.modal.modal-detail-transaksi", [
+                "transaction" => Transaction::firstWhere("id", $id),
+            ])->render(),
+        ]);
     }
 
     public function edit($id)

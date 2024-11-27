@@ -2,6 +2,9 @@
 
 use App\Models\Event;
 use App\Models\Menu;
+use App\Models\Ticket;
+use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -92,5 +95,51 @@ if (!function_exists("formatDate")) {
     function formatDate($date)
     {
         return Carbon::parse($date)->translatedFormat("l, d F Y");
+    }
+}
+
+if (!function_exists("concatDate")) {
+    function concatDate($date, $month, $year)
+    {
+        return Carbon::create($year, $month, $date)->translatedFormat("d F Y");
+    }
+}
+
+if (!function_exists("getTicket")) {
+    function getTicket($id)
+    {
+        return Ticket::find($id);
+    }
+}
+
+if (!function_exists("getTotalTicket")) {
+    function getTotalTicket($transactionID)
+    {
+        $total = 0;
+        $transaction = Transaction::find($transactionID);
+        foreach ($transaction->transaction_detail as $detail) {
+            if ($detail->ticket_id != null) {
+                $ticket_price = getTicket($detail->ticket_id)->price;
+                $total += $ticket_price;
+            }
+        }
+
+        return $total;
+    }
+}
+
+if (!function_exists("getDataPembeli")) {
+    function getDataPembeli($transactionID)
+    {
+        $transaction = Transaction::find($transactionID);
+        return $transaction->transaction_detail->firstWhere("type", "pembeli");
+    }
+}
+
+if (!function_exists("getDataPengunjung")) {
+    function getDataPengunjung($transactionID)
+    {
+        $transaction = Transaction::find($transactionID);
+        return $transaction->transaction_detail->where("type", "pengunjung");
     }
 }

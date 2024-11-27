@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Talent;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,22 @@ class TalentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Talent::create([
+            "event_id" => 1,
+            "name" => "Meiska",
+            "image" => "talents/talent-meiska.jpg",
+        ]);
+
+        Talent::create([
+            "event_id" => 1,
+            "name" => "Hasan Aftershine",
+            "image" => "talents/talent-hasan-aftershine.jpg",
+        ]);
+
+        Talent::create([
+            "event_id" => 1,
+            "name" => "Avogato",
+            "image" => "talents/talent-avogato.jpg",
+        ]);
     }
 }

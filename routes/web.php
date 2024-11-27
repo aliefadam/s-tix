@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\UserRoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,8 @@ Route::middleware("auth")->group(function () {
         Route::get("/{id}", [PageController::class, "ticketDetail"])->name("ticket.detail");
     });
 
+    include __DIR__ . '/api.php';
+
     Route::get("/logout", [AuthController::class, "logout"])->name("logout");
     require __DIR__ . '/admin.php';
 });
@@ -55,6 +58,6 @@ Route::prefix("event")->group(function () {
     Route::get("/{slug}/tickets", [PageController::class, "eventTickets"])->name("event.tickets");
     Route::post("/{slug}/data-diri", [PageController::class, "eventDataDiri"])->name("event.data-diri");
     Route::post("/{slug}/pembayaran", [PageController::class, "eventPembayaran"])->name("event.pembayaran");
-    Route::post("/{slug}/payment", [PageController::class, "eventPayment"])->name("event.payment");
+    Route::post("/{slug}/payment", [TransactionController::class, "store"])->name("event.payment");
     Route::get("/{slug}/payment-waiting/{invoice}", [PageController::class, "eventPaymentWaiting"])->name("event.payment-waiting");
 });

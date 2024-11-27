@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             UserSeeder::class,
             VendorSeeder::class,
+            EventSeeder::class,
+            TalentSeeder::class,
+            TicketSeeder::class
         ]);
     }
 }

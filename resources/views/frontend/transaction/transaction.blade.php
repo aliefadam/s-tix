@@ -58,8 +58,17 @@
                                             <div class="flex flex-col gap-1">
                                                 <span class="poppins-medium">{{ $transaction->event->name }}</span>
                                                 <span class="text-sm text-gray-600">
-                                                    {{ $transaction->transaction_detail()->where('ticket_id', '!=', null)->get()->count() }}
-                                                    Tiket Dipesan
+                                                    <ul class="flex flex-col gap-1 mt-1">
+                                                        @foreach ($transaction->transaction_detail->where('ticket_id', '!=', null)->groupBy('ticket_id') as $detail)
+                                                            @foreach ($detail as $ticket)
+                                                                <li class="">
+                                                                    {{ getTicket($ticket->ticket_id)->name }} x
+                                                                    {{ $detail->count() }} :
+                                                                    {{ money_format(getTicket($ticket->ticket_id)->price) }}
+                                                                </li>
+                                                            @endforeach
+                                                        @endforeach
+                                                    </ul>
                                                 </span>
                                             </div>
                                         </div>
@@ -73,7 +82,7 @@
                         </div>
 
                         <div class="flex justify-end gap-2 mt-5">
-                            <button data-order-id="" data-modal-target="detail-transaksi-modal"
+                            <button data-transaction-id="{{ $transaction->id }}" data-modal-target="detail-transaksi-modal"
                                 data-modal-toggle="detail-transaksi-modal"
                                 class="btn-detail-transaksi w-[220px] text-center lg:text-sm text-xs px-3 py-2 rounded-lg poppins-semibold text-teal-700 border border-teal-700 cursor-pointer hover:bg-teal-800 hover:bg-opacity-20 duration-200">
                                 <i class="fa-regular fa-eye mr-1"></i>
@@ -125,9 +134,41 @@
                 </div>
                 <!-- Modal body -->
                 <div id="detail-transaksi-body">
-                    @include('components.modal.modal-detail-transaksi')
+                    <div id="loading" class="flex justify-center items-center h-[300px]">
+                        @include('components.loading-indicator')
+                    </div>
+                    <div id="after-loading" class="hidden"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+@endsection
+
+@section('script')
+    <script type="module">
+        $(".btn-detail-transaksi").click(showDetailTransaction);
+
+        function showDetailTransaction() {
+            const transactionId = $(this).data('transaction-id');
+            $.ajax({
+                type: `GET`,
+                url: `/transaction/${transactionId}`,
+                beforeSend: function() {
+                    $("#loading").removeClass("hidden");
+                    $("#after-loading").addClass("hidden");
+                },
+                success: function(response) {
+                    $("#loading").addClass("hidden");
+                    $("#after-loading").removeClass("hidden");
+
+                    const view = response.view;
+                    $("#after-loading").html(view);
+
+                    initFlowbite();
+                }
+            });
+        }
+    </script>
 @endsection

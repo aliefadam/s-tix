@@ -92,9 +92,9 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div id="detail-transaksi-body">
+                {{-- <div id="detail-transaksi-body">
                     @include('components.modal.modal-detail-transaksi')
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
