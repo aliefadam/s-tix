@@ -31,6 +31,18 @@
     </main>
     @include('components.footer')
 
+    @if ($errors->any())
+        @include('components.notification.toast', [
+            'type' => 'error',
+            'message' => $errors->all(),
+        ])
+    @endif
+
+    @if (session('notification'))
+        @include('components.notification.sweetalert', [
+            'notification' => session('notification'),
+        ])
+    @endif
 
     @yield('script')
 </body>

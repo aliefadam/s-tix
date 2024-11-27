@@ -36,6 +36,7 @@ Route::middleware("guest")->group(function () {
 Route::middleware("auth")->group(function () {
     Route::prefix("/profile")->group(function () {
         Route::get("/", [PageController::class, "profile"])->name("profile");
+        Route::put("/", [AuthController::class, "update"])->name("profile.update");
     });
 
     Route::prefix("/transaction")->group(function () {
@@ -47,9 +48,9 @@ Route::middleware("auth")->group(function () {
         Route::get("/{id}", [PageController::class, "ticketDetail"])->name("ticket.detail");
     });
 
-    include __DIR__ . '/api.php';
-
     Route::get("/logout", [AuthController::class, "logout"])->name("logout");
+
+    include __DIR__ . '/api.php';
     require __DIR__ . '/admin.php';
 });
 

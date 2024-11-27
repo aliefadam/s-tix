@@ -70,6 +70,7 @@ class PageController extends Controller
 
         return view("frontend.event.event-data-diri", [
             "title" => "Data Diri",
+            "profile" => Auth::user(),
             "event" => Event::firstWhere("slug", $slug),
             "data_ticket" => [
                 "tickets" => $data_ticket,
@@ -130,7 +131,8 @@ class PageController extends Controller
     public function profile()
     {
         return view("frontend.user.profile", [
-            "title" => "Profil"
+            "title" => "Profil",
+            "profile" => Auth::user(),
         ]);
     }
 

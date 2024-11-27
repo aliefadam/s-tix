@@ -143,3 +143,23 @@ if (!function_exists("getDataPengunjung")) {
         return $transaction->transaction_detail->where("type", "pengunjung");
     }
 }
+
+if (!function_exists("getDatePart")) {
+    function getDatePart($dateString, $type)
+    {
+        if (empty($dateString)) {
+            return null;
+        }
+
+        $parts = explode('-', $dateString);
+
+        switch (strtolower($type)) {
+            case 'day':
+                return (int)$parts[2];
+            case 'month':
+                return (int)$parts[1];
+            case 'year':
+                return (int)$parts[0];
+        }
+    }
+}

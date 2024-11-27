@@ -58,21 +58,29 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
                                     <option selected>Tanggal</option>
                                     @for ($i = 1; $i <= 31; $i++)
-                                        <option>{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}</option>
+                                        <option @selected($i == getDatePart($profile->date_of_birth, 'day'))
+                                            value="{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}">
+                                            {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
+                                        </option>
                                     @endfor
                                 </select>
                                 <select id="month-pembeli" name="month-pembeli"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
                                     <option selected>Bulan</option>
                                     @for ($i = 1; $i <= 12; $i++)
-                                        <option>{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}</option>
+                                        <option @selected($i == getDatePart($profile->date_of_birth, 'month'))
+                                            value="{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}">
+                                            {{ str_pad($i, 2, '0', STR_PAD_LEFT) }}
+                                        </option>
                                     @endfor
                                 </select>
                                 <select id="year-pembeli" name="year-pembeli"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
                                     <option selected>Tahun</option>
                                     @for ($i = date('Y'); $i >= date('Y') - 100; $i--)
-                                        <option>{{ $i }}</option>
+                                        <option @selected($i == getDatePart($profile->date_of_birth, 'year')) value="{{ $i }}">
+                                            {{ $i }}
+                                        </option>
                                     @endfor
                                 </select>
                             </div>
@@ -83,13 +91,15 @@
                                 Kelamin</label>
                             <div class="grid grid-cols-2 gap-5">
                                 <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                                    <input id="gender-pembeli" type="radio" value="Laki-laki" name="gender-pembeli"
+                                    <input @checked($profile->gender == 'Laki-laki') id="gender-pembeli" type="radio" value="Laki-laki"
+                                        name="gender-pembeli"
                                         class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="gender-pembeli"
                                         class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Laki-laki</label>
                                 </div>
                                 <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                                    <input id="gender-pembeli-2" type="radio" value="Perempuan" name="gender-pembeli"
+                                    <input @checked($profile->gender == 'Perempuan') id="gender-pembeli-2" type="radio"
+                                        value="Perempuan" name="gender-pembeli"
                                         class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="gender-pembeli-2"
                                         class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Perempuan</label>
@@ -104,11 +114,12 @@
                                 <select id="tipe-identitas-pembeli" name="tipe-identitas-pembeli"
                                     class="poppins-medium bg-gray-100 rounded-s-lg border border-gray-300 text-gray-900 text-sm focus:ring-teal-500 focus:border-teal-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
                                     <option selected>Pilih Identitas</option>
-                                    <option value="KTP">KTP</option>
-                                    <option value="SIM">SIM</option>
-                                    <option value="PASSPORT">Passport</option>
+                                    <option @selected($profile->identity_type == 'KTP') value="KTP">KTP</option>
+                                    <option @selected($profile->identity_type == 'SIM') value="SIM">SIM</option>
+                                    <option @selected($profile->identity_type == 'PASSPORT') value="PASSPORT">Passport</option>
                                 </select>
                                 <input type="number" id="nomor-identitas-pembeli" name="nomor-identitas-pembeli"
+                                    value="{{ $profile->identity_number }}"
                                     class="bg-gray-50 rounded-e-lg border border-gray-300 text-gray-900 text-sm focus:ring-teal-500 focus:border-teal-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500" />
                             </div>
                         </div>
@@ -125,7 +136,8 @@
                                     <div
                                         class="shadow-md relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600">
                                     </div>
-                                    <span class="ms-3 text-sm font-medium text-white dark:text-gray-300">Samakan dengan data
+                                    <span class="ms-3 text-sm font-medium text-white dark:text-gray-300">Samakan dengan
+                                        data
                                         pembeli</span>
                                 </label>
                             </span>
