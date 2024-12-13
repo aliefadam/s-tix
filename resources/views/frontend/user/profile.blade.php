@@ -117,13 +117,9 @@
                             <select id="identity_type" name="identity_type"
                                 class="poppins-medium bg-gray-100 rounded-s-lg border border-gray-300 text-gray-900 text-sm focus:ring-teal-500 focus:border-teal-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500">
                                 <option selected>Pilih Identitas</option>
-                                <option {{ $profile->identity_type == 'KTP' ? 'selected' : '' }} value="KTP">KTP
-                                </option>
-                                <option {{ $profile->identity_type == 'SIM' ? 'selected' : '' }} value="SIM">SIM
-                                </option>
-                                <option {{ $profile->identity_type == 'PASSPORT' ? 'selected' : '' }} value="PASSPORT">
-                                    Passport
-                                </option>
+                                <option @selected($profile->identity_type == 'KTP') value="KTP">KTP</option>
+                                <option @selected($profile->identity_type == 'SIM') value="SIM">SIM</option>
+                                <option @selected($profile->identity_type == 'PASSPORT') value="PASSPORT">Passport</option>
                             </select>
                             <input type="number" id="identity_number" name="identity_number"
                                 value="{{ $profile->identity_number }}"
